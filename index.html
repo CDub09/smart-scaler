@@ -3,150 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartScaler Pro | Precision Batch Utility</title>
-    
-    <meta name="mobile-web-app-capable" content="yes">
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXX"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXX');</script>
-
+    <title>ScaleLogic Hub | Professional Scaling</title>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <style>
-        :root { --primary: #1b4332; --accent: #d8f3dc; --warning: #e63946; --text: #2d3436; }
-        body { font-family: -apple-system, sans-serif; background: #f8f9fa; color: var(--text); padding-bottom: 140px; margin: 0; }
-        .container { max-width: 700px; margin: 20px auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; }
+        :root { --primary: #2e7d32; --accent: #1b5e20; --bg: #ffffff; --text: #1a1a1a; --border: #4a5568; }
         
-        .yield-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--accent); padding: 15px; border-radius: 10px; margin: 20px 0; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #dfe6e9; border-radius: 8px; margin-top: 5px; font-size: 16px; }
-        .ingredient-row { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; margin-bottom: 12px; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: #f7fafc; color: var(--text); margin: 0; padding-bottom: 80px; font-size: 20px; line-height: 1.6; }
         
-        .btn-add { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; }
-        .btn-remove { background: none; border: none; color: #ccc; cursor: pointer; font-size: 20px; }
+        header { background: var(--primary); color: white; padding: 3rem 1rem; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        nav { background: var(--accent); padding: 18px; text-align: center; position: sticky; top: 0; z-index: 100; }
+        nav a { color: white; text-decoration: none; margin: 0 20px; font-weight: 800; font-size: 1.2rem; text-transform: uppercase; }
 
-        #save-indicator { position: absolute; top: 10px; right: 20px; color: #00b894; font-size: 10px; font-weight: bold; display: none; }
+        .container { max-width: 650px; margin: auto; padding: 20px; }
+        .card { background: white; border-radius: 24px; padding: 35px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); margin-bottom: 30px; border: 2px solid #e2e8f0; }
         
-        /* Alerts & Results */
-        .batch-alert { background: #fff3cd; color: #856404; padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; line-height: 1.4; border-left: 4px solid #ffc107; }
-        .result-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f1f1; align-items: center; }
-        .egg-tip { display: block; font-size: 11px; color: #636e72; font-style: italic; margin-top: 4px; }
+        /* Landmark Headers: Large Icons & Text */
+        h2 { font-size: 2rem; color: var(--primary); margin: 0 0 20px 0; display: flex; align-items: center; gap: 15px; font-weight: 900; }
+        
+        label { display: block; font-weight: 800; margin-bottom: 10px; color: #2d3748; font-size: 1.1rem; }
 
-        /* Fixed Legal/Safety Footer */
-        .master-footer { position: fixed; bottom: 0; left: 0; width: 100%; background: #2d3436; color: #dfe6e9; padding: 15px 0; font-size: 11px; text-align: center; border-top: 4px solid var(--warning); z-index: 1000; }
-        .legal-links a { color: #81ecec; text-decoration: none; margin: 0 10px; }
+        input, select, textarea { width: 100%; padding: 22px; border: 3px solid var(--border); border-radius: 18px; font-size: 1.3rem; margin-bottom: 15px; box-sizing: border-box; color: black; font-weight: 600; background: #fff; }
+        input:focus { border-color: var(--primary); outline: 4px solid #c6f6d5; }
 
-        @media print { .no-print, .master-footer { display: none !important; } .container { box-shadow: none; margin: 0; padding: 0; } }
+        /* Massive Hit Zones for All Users */
+        .btn { background: var(--primary); color: white; border: none; padding: 25px; border-radius: 18px; font-weight: 900; cursor: pointer; width: 100%; font-size: 1.4rem; transition: transform 0.1s; box-shadow: 0 6px 15px rgba(46, 125, 50, 0.2); }
+        .btn:active { transform: scale(0.97); }
+        .btn-outline { background: #f8fafc; color: #2d3748; border: 3px solid #cbd5e0; margin-top: 10px; }
+        .btn-danger { background: #fff5f5; color: #c53030; border: 3px solid #feb2b2; padding: 18px; font-weight: 900; border-radius: 15px; font-size: 1.1rem; }
+
+        .row { border: 3px solid #edf2f7; padding: 20px; border-radius: 20px; margin-bottom: 20px; background: #fcfcfc; }
+        
+        .res-box { background: #f0fff4; border: 3px solid #c6f6d5; padding: 25px; border-radius: 20px; margin-top: 20px; }
+        .res-line { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 2px solid #c6f6d5; font-weight: 800; font-size: 1.3rem; }
+        
+        .safe-tag { color: #c05621; background: #fffaf0; padding: 6px 12px; border-radius: 10px; font-size: 0.85rem; font-weight: 900; border: 1px solid #fbd38d; }
+
+        #load-msg { display: none; text-align: center; font-weight: 900; color: var(--primary); padding: 30px; font-size: 1.5rem; }
+        
+        footer { text-align: center; padding: 40px 20px; color: #718096; font-size: 0.95rem; font-weight: 500; border-top: 1px solid #e2e8f0; margin-top: 50px; }
     </style>
 </head>
 <body>
 
+<header>
+    <h1 style="margin:0; font-size: 2.8rem; font-weight: 900;">ScaleLogic Hub</h1>
+    <p style="margin:10px 0 0; font-size: 1.2rem; font-weight: 600; opacity:0.9;">Professional Precision. Culinary Safety.</p>
+</header>
+
+<nav>
+    <a href="#">🍳 RECIPES</a>
+    <a href="#" style="opacity:0.4;">🖼️ ART SIZER</a>
+</nav>
+
 <div class="container">
-    <div id="save-indicator">✓ AUTO-SAVED</div>
-    <div class="no-print">
-        <h1 style="color: var(--primary); margin: 0 0 5px 0;">SmartScaler Pro</h1>
-        <p style="font-size: 14px; color: #636e72; margin-bottom: 20px;">The Professional Standard for Any Recipe Size.</p>
+    <div class="card">
+        <h2>📥 1. Import</h2>
+        <p style="font-weight: 700; color: #4a5568; margin-bottom: 15px;">Paste text or snap a clear photo of your recipe card.</p>
+        <textarea id="recipe-in" placeholder="Ex: 2 cups flour, 1 tsp salt..." rows="4"></textarea>
         
-        <div class="yield-grid">
-            <div><label>Original Servings</label><input type="number" id="origYield" value="1" oninput="calculate()"></div>
-            <div><label>Desired Servings</label><input type="number" id="newYield" value="10" oninput="calculate()"></div>
+        <label for="camera" class="btn btn-outline" style="display:block; text-align:center; cursor:pointer;">📸 Upload / Photo Scan</label>
+        <input type="file" id="camera" accept="image/*" style="display:none;">
+        
+        <button onclick="startProcessing()" class="btn" style="margin-top:20px;">🚀 Process & Scale</button>
+        <div id="load-msg">✨ Digitizing Recipe... Please Wait.</div>
+    </div>
+
+    <div class="card">
+        <h2>⚖️ 2. Set Scale</h2>
+        <label>Original Servings (Makes)</label>
+        <input type="number" id="s-orig" value="1" oninput="runScale()">
+        <label>Target Servings (Goal)</label>
+        <input type="number" id="s-new" value="1" oninput="oninput="runScale()">
+    </div>
+
+    <div class="card">
+        <h2>📋 3. Results</h2>
+        <div id="item-rows"></div>
+        <button onclick="addNewRow()" class="btn btn-outline">+ Add Item Manually</button>
+
+        <div id="result-view" style="display:none; margin-top:40px;">
+            <div class="res-box">
+                <h3 style="margin:0 0 15px 0; color:var(--primary); font-size: 1.5rem;">🍳 Scaled Recipe</h3>
+                <div id="prep-list"></div>
+            </div>
+
+            <div class="res-box" style="background:#ebf8ff; border-color:#bee3f8; color:#2a4365;">
+                <h3 style="margin:0 0 15px 0; font-size: 1.5rem;">🛒 Grocery Summary</h3>
+                <div id="shop-list"></div>
+            </div>
+
+            <button onclick="shareList()" class="btn" style="margin-top:30px;">📲 Save to My Notes</button>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <button onclick="window.print()" class="btn btn-outline">🖨️ Print PDF</button>
+                <button onclick="location.reload()" class="btn btn-outline" style="color:#e53e3e; border-color:#feb2b2;">🗑️ Clear All</button>
+            </div>
         </div>
-        
-        <div id="ingredient-list"></div>
-        <button class="btn-add" onclick="addRow()">+ Add Ingredient</button>
     </div>
 
-    <div id="results-section" style="margin-top:30px;">
-        <h2 style="text-align:center; border-bottom: 2px solid var(--accent); padding-bottom: 10px;">Scaled Prep Sheet</h2>
-        <div id="results-list"></div>
-    </div>
-</div>
-
-<div class="master-footer no-print">
-    <div style="margin-bottom: 5px; padding: 0 15px;">
-        <strong>SAFETY:</strong> Scaling math is for ratios. Verify cooking times & temperatures.
-    </div>
-    <div class="legal-links">
-        <a href="#" onclick="alert('All recipe data is stored LOCALLY in your browser. We never see or store your ingredients.')">Privacy</a> | 
-        <a href="#" onclick="alert('SmartScaler is a mathematical tool. User assumes all responsibility for food safety.')">Terms</a> | 
-        <a href="mailto:support@yourdomain.com">Support</a>
-    </div>
+    <footer>
+        <strong>SCALE-SAFE™ TECHNOLOGY</strong><br>
+        ScaleLogic Hub automatically adjusts leavening and salt for large batches (4x+) to ensure professional results.<br>
+        &copy; 2026 ScaleLogic Hub Tools
+    </footer>
 </div>
 
 <script>
-    let ingredients = JSON.parse(localStorage.getItem('smartScalerV2.4')) || [
-        { name: "Flour", amount: 2, unit: "cups" },
-        { name: "Large Eggs", amount: 1, unit: "count" },
-        { name: "Salt", amount: 0.5, unit: "tsp" }
-    ];
+    const camIn = document.getElementById('camera');
+    camIn.addEventListener('change', async (e) => {
+        if(!e.target.files[0]) return;
+        document.getElementById('load-msg').style.display='block';
+        const w = await Tesseract.createWorker('eng');
+        const { data: { text } } = await w.recognize(e.target.files[0]);
+        document.getElementById('recipe-in').value = text;
+        await w.terminate();
+        document.getElementById('load-msg').style.display='none';
+        startProcessing();
+    });
 
-    function save() { 
-        localStorage.setItem('smartScalerV2.4', JSON.stringify(ingredients)); 
-        const ind = document.getElementById('save-indicator');
-        ind.style.display = 'block'; setTimeout(() => ind.style.display = 'none', 1500);
-    }
-
-    function addRow() { ingredients.push({ name: "", amount: 1, unit: "cups" }); render(); }
-    function removeRow(i) { ingredients.splice(i, 1); render(); save(); }
-    function update(i, f, v) { ingredients[i][f] = v; save(); calculate(); }
-
-    function render() {
-        const list = document.getElementById('ingredient-list');
-        list.innerHTML = '';
-        ingredients.forEach((ing, i) => {
-            const div = document.createElement('div');
-            div.className = 'ingredient-row';
-            div.innerHTML = `
-                <input type="text" placeholder="Item" value="${ing.name}" oninput="update(${i}, 'name', this.value)">
-                <input type="number" step="any" value="${ing.amount}" oninput="update(${i}, 'amount', parseFloat(this.value))">
-                <select onchange="update(${i}, 'unit', this.value)">
-                    <option value="cups" ${ing.unit==='cups'?'selected':''}>cups</option>
-                    <option value="tsp" ${ing.unit==='tsp'?'selected':''}>tsp</option>
-                    <option value="tbsp" ${ing.unit==='tbsp'?'selected':''}>tbsp</option>
-                    <option value="grams" ${ing.unit==='grams'?'selected':''}>grams</option>
-                    <option value="oz" ${ing.unit==='oz'?'selected':''}>oz</option>
-                    <option value="count" ${ing.unit==='count'?'selected':''}>count</option>
-                </select>
-                <button class="btn-remove" onclick="removeRow(${i})">×</button>`;
-            list.appendChild(div);
+    function startProcessing() {
+        const raw = document.getElementById('recipe-in').value.split('\n');
+        document.getElementById('item-rows').innerHTML = '';
+        raw.forEach(l => {
+            const m = l.match(/(\d+\.?\d*)\s*(cup|tsp|tbsp|g|oz|lb|ml|l|unit)?\s+(.*)/i);
+            if(m) addNewRow(m[3].trim(), m[1], (m[2] || 'unit').toLowerCase());
         });
-        calculate();
+        runScale();
     }
 
-    function calculate() {
-        const orig = parseFloat(document.getElementById('origYield').value) || 1;
-        const target = parseFloat(document.getElementById('newYield').value) || 1;
-        const factor = target / orig;
-        const resList = document.getElementById('results-list');
-        resList.innerHTML = '';
+    function addNewRow(n='', q='', u='cup') {
+        const d = document.createElement('div');
+        d.className = 'row';
+        d.innerHTML = `
+            <label>Ingredient</label><input type="text" class="i-n" value="${n}" oninput="runScale()">
+            <label>Quantity</label><input type="number" class="i-q" value="${q}" oninput="runScale()">
+            <label>Unit</label>
+            <select class="i-u" onchange="runScale()">
+                <option value="cup" ${u==='cup'?'selected':''}>Cup</option>
+                <option value="tsp" ${u==='tsp'?'selected':''}>Tsp</option>
+                <option value="tbsp" ${u==='tbsp'?'selected':''}>Tbsp</option>
+                <option value="g" ${u==='g'?'selected':''}>Grams (g)</option>
+                <option value="oz" ${u==='oz'?'selected':''}>Ounces (oz)</option>
+                <option value="unit" ${u==='unit'?'selected':''}>Unit/Count</option>
+            </select>
+            <button class="btn-danger" onclick="this.parentElement.remove(); runScale()">✕ Remove Ingredient</button>
+        `;
+        document.getElementById('item-rows').appendChild(d);
+    }
 
-        // BI-DIRECTIONAL LOGIC: Small Batch Warnings
-        if (factor < 0.25) {
-            resList.innerHTML += `<div class="batch-alert"><strong>📉 Small Batch Note:</strong> You are reducing this recipe significantly. Evaporation happens faster in small pots; monitor liquids closely and check doneness 20% earlier.</div>`;
-        } else if (factor > 4) {
-            resList.innerHTML += `<div class="batch-alert" style="background:#d1ecf1; color:#0c5460; border-color:#bee5eb;"><strong>📈 Large Batch Note:</strong> Smart-Scaling is active. We recommend checking spice levels as they don't always scale linearly.</div>`;
+    function fmtFrac(v) {
+        if (v % 1 === 0) return v;
+        const w = Math.floor(v); const f = v - w;
+        if (f <= 0.2) return (w > 0 ? w : '') + " 1/4";
+        if (f <= 0.4) return (w > 0 ? w : '') + " 1/3";
+        if (f <= 0.6) return (w > 0 ? w : '') + " 1/2";
+        if (f <= 0.8) return (w > 0 ? w : '') + " 3/4";
+        return Math.ceil(v);
+    }
+
+    function runScale() {
+        const factor = (document.getElementById('s-new').value || 1) / (document.getElementById('s-orig').value || 1);
+        const rows = document.querySelectorAll('.row');
+        if(rows.length > 0) document.getElementById('result-view').style.display='block';
+        
+        const p_out = document.getElementById('prep-list');
+        const s_out = document.getElementById('shop-list');
+        p_out.innerHTML = ''; s_out.innerHTML = '';
+        let shop = {};
+
+        rows.forEach(r => {
+            const n = r.querySelector('.i-n').value;
+            const q = parseFloat(r.querySelector('.i-q').value) || 0;
+            const u = r.querySelector('.i-u').value;
+            if(!n) return;
+
+            let s = q * factor;
+            const isSafeItem = /salt|soda|powder|yeast/i.test(n) && factor >= 4;
+            if(isSafeItem) s *= 0.85;
+
+            p_out.innerHTML += `<div class="res-line"><span>${n} ${isSafeItem ? '<span class="safe-tag">SAFE-SCALE™</span>' : ''}</span> <span>${fmtFrac(s)} ${u}</span></div>`;
+            
+            let cq = s; let cu = u;
+            if(cu==='tsp' && cq>=3) { cq/=3; cu='tbsp'; }
+            if(cu==='tbsp' && cq>=16) { cq/=16; cu='cups'; }
+            if(!shop[n]) shop[n] = { q: 0, u: cu };
+            shop[n].q += cq;
+        });
+
+        for(let k in shop) {
+            s_out.innerHTML += `<div class="res-line"><span>${k}</span> <span>${shop[k].q.toFixed(2)} ${shop[k].u}</span></div>`;
         }
-
-        ingredients.forEach(ing => {
-            if (!ing.name) return;
-            let scaled = ing.amount * factor;
-            let tip = "";
-
-            // FRACTIONAL EGG LOGIC
-            if (ing.name.toLowerCase().includes("egg") && !Number.isInteger(scaled)) {
-                tip = `<span class="egg-tip">Tip: Whisk 1 egg and use ${scaled.toFixed(2)} of it by weight/volume.</span>`;
-            }
-
-            // SMART SALT/SODA LOGIC for Large Batches
-            if ((ing.name.toLowerCase().includes("salt") || ing.name.toLowerCase().includes("soda")) && factor > 4) {
-                scaled *= 0.85; // Safety cap
-                tip = `<span class="egg-tip" style="color:var(--warning)">Smart-Scaled for bulk.</span>`;
-            }
-
-            resList.innerHTML += `<div class="result-item">
-                <div><strong>${ing.name}</strong>${tip}</div>
-                <div style="font-weight:bold; color:var(--primary);">${scaled.toFixed(2)} ${ing.unit}</div>
-            </div>`;
-        });
     }
-    render();
+
+    async function shareList() {
+        let txt = "ScaleLogic Shopping List\n\n";
+        document.querySelectorAll('#shop-list .res-line').forEach(l => txt += "• " + l.innerText + "\n");
+        if(navigator.share) await navigator.share({ title: 'ScaleLogic Hub', text: txt });
+        else { navigator.clipboard.writeText(txt); alert("Copied! Paste into your Notes app."); }
+    }
 </script>
 </body>
 </html>
