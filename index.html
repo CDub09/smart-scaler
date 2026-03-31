@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ScaleLogic Hub | Pro Scaling & Conversion</title>
+    <title>ScaleLogic Hub | Professional Scaling Master</title>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <style>
         :root { --primary: #2e7d32; --accent: #1b5e20; --bg: #f8fafc; --text: #1a202c; --border: #4a5568; }
         
         body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding-bottom: 100px; font-size: 20px; line-height: 1.6; }
         
-        header { background: var(--primary); color: white; padding: 2.5rem 1rem; text-align: center; }
+        header { background: var(--primary); color: white; padding: 2.5rem 1rem; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         header h1 { margin: 0; font-size: 2.6rem; font-weight: 900; }
         
         nav { background: var(--accent); padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; display: flex; justify-content: center; gap: 20px; }
@@ -18,40 +18,42 @@
 
         .container { max-width: 680px; margin: auto; padding: 20px; }
         
-        /* UX: Visual Path Selection */
-        .path-selector { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
-        .path-btn { padding: 20px; border-radius: 15px; border: 2px solid var(--border); background: white; font-weight: 800; cursor: pointer; text-align: center; font-size: 1rem; }
-        .path-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-
-        .card { background: white; border-radius: 24px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 25px; border: 2px solid #e2e8f0; }
-        .step-tag { background: #319795; color: white; padding: 4px 12px; border-radius: 50px; font-size: 0.8rem; font-weight: 900; display: inline-block; margin-bottom: 10px; }
+        /* THE WELCOME HUB: Clear Dual Intent */
+        .welcome-hero { background: #e6fffa; border: 3px solid #38b2ac; border-radius: 24px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .welcome-hero h2 { color: #234e52; margin-top: 0; font-size: 1.8rem; }
+        .welcome-hero p { font-size: 1.1rem; color: #285e61; font-weight: 600; margin-bottom: 20px; }
         
-        h2 { font-size: 1.8rem; color: var(--primary); margin: 0 0 10px 0; font-weight: 900; }
-        .guide { font-size: 0.95rem; color: #4a5568; margin-bottom: 20px; font-weight: 600; border-left: 4px solid #cbd5e0; padding-left: 12px; }
+        .intent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .intent-btn { background: white; border: 2px solid #38b2ac; padding: 15px; border-radius: 15px; cursor: pointer; font-weight: 800; color: #234e52; transition: 0.2s; text-align: center; font-size: 0.95rem; }
+        .intent-btn:hover, .intent-btn.active { background: #38b2ac; color: white; }
 
-        label { display: block; font-weight: 800; margin-bottom: 8px; color: #2d3748; font-size: 1rem; }
-        input, select, textarea { width: 100%; padding: 20px; border: 3px solid var(--border); border-radius: 15px; font-size: 1.2rem; margin-bottom: 15px; box-sizing: border-box; color: black; font-weight: 600; }
+        .card { background: white; border-radius: 24px; padding: 35px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-bottom: 30px; border: 2px solid #e2e8f0; position: relative; }
+        .step-label { background: #319795; color: white; padding: 5px 15px; border-radius: 50px; font-size: 0.85rem; font-weight: 900; display: inline-block; margin-bottom: 15px; }
+        h2 { font-size: 2rem; color: var(--primary); margin: 0 0 10px 0; font-weight: 900; }
+        .how-to { font-size: 1rem; color: #4a5568; margin-bottom: 25px; font-weight: 600; border-left: 4px solid #cbd5e0; padding-left: 15px; }
 
-        .btn { background: var(--primary); color: white; border: none; padding: 22px; border-radius: 18px; font-weight: 900; cursor: pointer; width: 100%; font-size: 1.3rem; box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2); }
-        .btn-outline { background: #f8fafc; color: #2d3748; border: 3px solid #cbd5e0; margin-top: 10px; font-size: 1.1rem; }
-        .btn-danger { background: #fff5f5; color: #c53030; border: 3px solid #feb2b2; padding: 15px; font-weight: 900; border-radius: 12px; margin-top: 10px; }
+        label { display: block; font-weight: 800; margin-bottom: 10px; color: #2d3748; font-size: 1.1rem; }
+        input, select, textarea { width: 100%; padding: 22px; border: 3px solid var(--border); border-radius: 18px; font-size: 1.3rem; margin-bottom: 15px; box-sizing: border-box; color: black; font-weight: 600; background: #fff; }
 
-        .row-box { border: 2px solid #edf2f7; padding: 20px; border-radius: 20px; margin-bottom: 15px; background: #fafafa; }
+        .btn { background: var(--primary); color: white; border: none; padding: 25px; border-radius: 18px; font-weight: 900; cursor: pointer; width: 100%; font-size: 1.4rem; transition: 0.2s; box-shadow: 0 6px 15px rgba(46, 125, 50, 0.2); }
+        .btn-outline { background: #f8fafc; color: #2d3748; border: 3px solid #cbd5e0; margin-top: 15px; font-size: 1.1rem; }
+        .btn-danger { background: #fff5f5; color: #c53030; border: 3px solid #feb2b2; padding: 18px; font-weight: 900; border-radius: 15px; font-size: 1.1rem; margin-top: 10px; }
+
+        .row-item { border: 3px solid #edf2f7; padding: 25px; border-radius: 20px; margin-bottom: 20px; background: #fcfcfc; }
         .res-box { background: #f0fff4; border: 3px solid #c6f6d5; padding: 25px; border-radius: 20px; margin-top: 25px; }
-        .res-line { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 2px solid #c6f6d5; font-weight: 800; font-size: 1.2rem; }
+        .res-line { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 2px solid #c6f6d5; font-weight: 800; font-size: 1.3rem; }
+        .safe-tag { color: #c05621; background: #fffaf0; padding: 5px 12px; border-radius: 10px; font-size: 0.8rem; font-weight: 900; border: 1px solid #fbd38d; margin-left: 10px; }
+
+        footer { text-align: center; padding: 50px 20px; color: #718096; font-size: 1rem; line-height: 1.6; border-top: 1px solid #e2e8f0; margin-top: 50px; }
         
-        .safe-tag { color: #c05621; background: #fffaf0; padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 900; border: 1px solid #fbd38d; margin-left: 8px; }
-
-        footer { text-align: center; padding: 40px; color: #718096; font-size: 0.9rem; border-top: 1px solid #e2e8f0; margin-top: 40px; }
-
-        @media print { .btn, .guide, nav, .path-selector, .step-tag, .btn-danger { display: none !important; } }
+        @media print { .btn, .intent-grid, .how-to, nav, .step-label, .btn-danger, .welcome-hero { display: none !important; } }
     </style>
 </head>
 <body>
 
 <header>
     <h1>ScaleLogic Hub</h1>
-    <p>Professional Culinary Math for Creative Educators</p>
+    <p>Professional Accuracy. Culinary Safety.</p>
 </header>
 
 <nav>
@@ -60,182 +62,28 @@
 </nav>
 
 <div class="container">
-    
-    <div class="path-selector">
-        <div class="path-btn active" id="p-auto" onclick="setPath('auto')">📥 Smart Import<br><small>Paste or Photo</small></div>
-        <div class="path-btn" id="p-man" onclick="setPath('man')">⚖️ Quick Convert<br><small>Direct Entry</small></div>
+    <div class="welcome-hero">
+        <h2>👋 Welcome, Creator.</h2>
+        <p>Ready to scale? Choose your path below to get started. We'll handle the math and protect your flavor profile.</p>
+        <div class="intent-grid">
+            <button class="intent-btn active" id="btn-import" onclick="showPath('import')">📥 Import & Digitize<br>Paste text or scan photo</button>
+            <button class="intent-btn" id="btn-manual" onclick="showPath('manual')">⚖️ Quick Convert<br>Direct ingredient entry</button>
+        </div>
     </div>
 
-    <div id="import-section" class="card">
-        <span class="step-tag">STEP 1</span>
+    <div id="section-import" class="card">
+        <span class="step-label">STEP 1</span>
         <h2>Import Recipe</h2>
-        <p class="guide">Paste text or use your camera to scan a physical card.</p>
-        <textarea id="raw-text" placeholder="Example: 2 cups flour..." rows="3"></textarea>
-        <label for="cam" class="btn btn-outline" style="display:block; text-align:center; cursor:pointer;">📸 Scan Recipe Photo</label>
-        <input type="file" id="cam" accept="image/*" style="display:none;">
-        <button onclick="process()" class="btn" style="margin-top:20px;">🚀 Process & Scale</button>
+        <p class="how-to">Paste your ingredient list below OR snap a photo of a recipe card to auto-fill the list.</p>
+        <textarea id="raw-input" placeholder="Ex: 2 cups flour, 1.5 tsp salt..." rows="4"></textarea>
+        
+        <label for="ocr-cam" class="btn btn-outline" style="display:block; text-align:center; cursor:pointer;">📸 Scan Recipe Photo</label>
+        <input type="file" id="ocr-cam" accept="image/*" style="display:none;">
+        
+        <button onclick="parseRecipe()" class="btn" style="margin-top:20px;">🚀 Process & Scale</button>
     </div>
 
     <div class="card">
-        <span class="step-tag">STEP 2</span>
+        <span class="step-label">STEP 2</span>
         <h2>Set Your Scale</h2>
-        <p class="guide">Enter the original batch size and your target goal.</p>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div>
-                <label>Original Makes</label>
-                <input type="number" id="y-orig" value="1" oninput="run()">
-            </div>
-            <div>
-                <label>Goal Yield</label>
-                <input type="number" id="y-goal" value="1" oninput="run()">
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <span class="step-tag">STEP 3</span>
-        <h2>Ingredient List</h2>
-        <div id="list-area"></div>
-        <button onclick="add(null, null, 'unit')" class="btn btn-outline">+ Add Ingredient Manually</button>
-
-        <div id="final-results" style="display:none; margin-top:35px; border-top: 3px solid #edf2f7; padding-top: 25px;">
-            <div class="res-box">
-                <h3 style="margin-top:0; color:var(--primary);">🍳 Scaled Prep Instructions</h3>
-                <div id="prep-out"></div>
-            </div>
-
-            <div class="res-box" style="background:#ebf8ff; border-color:#bee3f8; color:#2a4365;">
-                <h3 style="margin-top:0;">🛒 Grocery Shopping List</h3>
-                <div id="shop-out"></div>
-            </div>
-
-            <button onclick="save()" class="btn" style="margin-top:25px;">📲 Send to Notes / Phone</button>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
-                <button onclick="window.print()" class="btn btn-outline">🖨️ Print PDF</button>
-                <button onclick="location.reload()" class="btn btn-outline" style="color:#c53030; border-color:#feb2b2;">🗑️ Reset Hub</button>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <strong>Built for ScaleLogic™ Professionals</strong><br>
-        Safety Math: Reactive items (salt/yeast) automatically reduced by 15% when scaling 4x+. &copy; 2026
-    </footer>
-</div>
-
-<script>
-    // UX PATH TOGGLE
-    function setPath(p) {
-        const auto = document.getElementById('import-section');
-        const bAuto = document.getElementById('p-auto');
-        const bMan = document.getElementById('p-man');
-        
-        if(p === 'man') {
-            auto.style.display = 'none';
-            bMan.className = 'path-btn active';
-            bAuto.className = 'path-btn';
-            if(document.querySelectorAll('.row-box').length === 0) add();
-        } else {
-            auto.style.display = 'block';
-            bAuto.className = 'path-btn active';
-            bMan.className = 'path-btn';
-        }
-    }
-
-    // OCR SCANNING
-    const cam = document.getElementById('cam');
-    cam.addEventListener('change', async (e) => {
-        if(!e.target.files[0]) return;
-        const w = await Tesseract.createWorker('eng');
-        const { data: { text } } = await w.recognize(e.target.files[0]);
-        document.getElementById('raw-text').value = text;
-        await w.terminate();
-        process();
-    });
-
-    function process() {
-        const raw = document.getElementById('raw-text').value.split('\n');
-        document.getElementById('list-area').innerHTML = '';
-        raw.forEach(l => {
-            const m = l.match(/(\d+\.?\d*)\s*(cup|tsp|tbsp|g|oz|lb|ml|l|unit)?\s+(.*)/i);
-            if(m) add(m[3].trim(), m[1], (m[2] || 'unit').toLowerCase());
-        });
-        run();
-    }
-
-    function add(n='', q='', u='cup') {
-        const d = document.createElement('div');
-        d.className = 'row-box';
-        d.innerHTML = `
-            <label>Item</label><input type="text" class="n-v" value="${n||''}" oninput="run()">
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <div><label>Qty</label><input type="number" class="q-v" value="${q||''}" oninput="run()"></div>
-                <div>
-                    <label>Unit</label>
-                    <select class="u-v" onchange="run()">
-                        <option value="cup" ${u==='cup'?'selected':''}>Cup</option>
-                        <option value="tsp" ${u==='tsp'?'selected':''}>Tsp</option>
-                        <option value="tbsp" ${u==='tbsp'?'selected':''}>Tbsp</option>
-                        <option value="g" ${u==='g'?'selected':''}>Grams (g)</option>
-                        <option value="unit" ${u==='unit'?'selected':''}>Unit</option>
-                    </select>
-                </div>
-            </div>
-            <button class="btn-danger" onclick="this.parentElement.remove(); run()">✕ Remove</button>
-        `;
-        document.getElementById('list-area').appendChild(d);
-    }
-
-    function fmt(v) {
-        if (v % 1 === 0) return v;
-        const w = Math.floor(v); const f = v - w;
-        if (f <= 0.2) return (w > 0 ? w : '') + " 1/4";
-        if (f <= 0.4) return (w > 0 ? w : '') + " 1/3";
-        if (f <= 0.6) return (w > 0 ? w : '') + " 1/2";
-        if (f <= 0.8) return (w > 0 ? w : '') + " 3/4";
-        return Math.ceil(v);
-    }
-
-    function run() {
-        const fact = (document.getElementById('y-goal').value || 1) / (document.getElementById('y-orig').value || 1);
-        const rs = document.querySelectorAll('.row-box');
-        if(rs.length > 0) document.getElementById('final-results').style.display='block';
-        
-        const p_l = document.getElementById('prep-out');
-        const s_l = document.getElementById('shop-out');
-        p_l.innerHTML = ''; s_l.innerHTML = '';
-        let shop = {};
-
-        rs.forEach(r => {
-            const n = r.querySelector('.n-v').value;
-            const q = parseFloat(r.querySelector('.q-v').value) || 0;
-            const u = r.querySelector('.u-v').value;
-            if(!n) return;
-
-            let s = q * fact;
-            const safe = /salt|soda|powder|yeast/i.test(n) && fact >= 4;
-            if(safe) s *= 0.85;
-
-            p_l.innerHTML += `<div class="res-line"><span>${n} ${safe ? '<span class="safe-tag">Safe-Scale™</span>' : ''}</span> <span>${fmt(s)} ${u}</span></div>`;
-            
-            let cq = s; let cu = u;
-            if(cu==='tsp' && cq>=3) { cq/=3; cu='tbsp'; }
-            if(cu==='tbsp' && cq>=16) { cq/=16; cu='cups'; }
-            if(!shop[n]) shop[n] = { q: 0, u: cu };
-            shop[n].q += cq;
-        });
-
-        for(let k in shop) {
-            s_l.innerHTML += `<div class="res-line"><span>${k}</span> <span>${shop[k].q.toFixed(2)} ${shop[k].u}</span></div>`;
-        }
-    }
-
-    async function save() {
-        let t = "ScaleLogic Grocery List\n\n";
-        document.querySelectorAll('#shop-out .res-line').forEach(l => t += "• " + l.innerText + "\n");
-        if(navigator.share) await navigator.share({ title: 'ScaleLogic Hub', text: t });
-        else { navigator.clipboard.writeText(t); alert("List Copied! Paste into Notes."); }
-    }
-</script>
-</body>
-</html>
+        <p
