@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartScaler Pro | The Enterprise Kitchen Standard</title>
+    
+    <style>
+        :root { --primary: #1b4332; --accent: #d8f3dc; --warning: #e63946; --text: #2d3436; }
+        body { font-family: -apple-system, sans-serif; background: #f8f9fa; color: var(--text); padding-bottom: 120px; }
+        .container { max-width: 700px; margin: 20px auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative; }
+        
+        /* Legal & Safety Footer */
+        .master-footer { 
+            position: fixed; bottom: 0; left: 0; width: 100%; 
+            background: #2d3436; color: #dfe6e9; padding: 15px 0;
+            font-size: 11px; text-align: center; border-top: 4px solid var(--warning);
+            z-index: 1000;
+        }
+        .legal-links a { color: #81ecec; text-decoration: none; margin: 0 10px; }
+        .legal-links a:hover { text-decoration: underline; }
+
+        .yield-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: var(--accent); padding: 15px; border-radius: 10px; margin: 20px 0; }
+        input, select { width: 100%; padding: 12px; border: 1px solid #dfe6e9; border-radius: 8px; margin-top: 5px; }
+        .ingredient-row { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; margin-bottom: 12px; }
+        
+        #save-indicator { position: absolute; top: 10px; right: 20px; color: #00b894; font-size: 10px; font-weight: bold; display: none; }
+
+        @media print { .no-print, .master-footer { display: none !important; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="save-indicator">✓ AUTO-SAVED</div>
+    <div class="no-print">
+        <h1 style="color: var(--primary); margin-top: 0;">SmartScaler Pro</h1>
+        <div class="yield-grid">
+            <div><label>Orig. Yield</label><input type="number" id="origYield" value="1" oninput="calculate()"></div>
+            <div><label>Target Yield</label><input type="number" id="newYield" value="10" oninput="calculate()"></div>
+        </div>
+        <div id="ingredient-list"></div>
+        <button onclick="addRow()" style="width:100%; padding:12px; background:var(--primary); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">+ Add Ingredient</button>
+    </div>
+
+    <div id="results-section" style="margin-top:30px; border-top: 2px solid #eee;">
+        <h2 style="text-align:center;">Scaled Prep List</h2>
+        <div id="results-list"></div>
+    </div>
+</div>
+
+<div class="master-footer no-print">
+    <div style="margin-bottom: 5px;">
+        <strong>SAFETY:</strong> Ratios are mathematical. Verify all cook temps & leavening.
+    </div>
+    <div class="legal-links">
+        <a href="#" onclick="alert('Privacy Policy: All recipe data is stored LOCALLY in your browser. We never see or store your ingredients on our servers.')">Privacy Policy</a> | 
+        <a href="#" onclick="alert('Terms of Use: SmartScaler Pro is a mathematical tool. Users assume all responsibility for food safety and preparation results.')">Terms of Use</a> | 
+        <a href="mailto:support@yourdomain.com">Support</a>
+    </div>
+    <div style="margin-top: 5px; opacity: 0.6;">© 2026 Your Venture Brand</div>
+</div>
+
+<script>
+    let ingredients = JSON.parse(localStorage.getItem('smartScalerV2.3')) || [
+        { name: "Flour", amount: 2, unit: "cups" },
+        { name: "Baking Soda", amount: 1, unit: "tsp" }
+    ];
+
+    function addRow() { ingredients.push({ name: "", amount: 1, unit: "cups" }); render(); }
+    function removeRow(i) { ingredients.splice(i, 1); render(); save(); }
+    
+    function save() { 
+        localStorage.setItem('smartScalerV2.3', JSON.stringify(ingredients)); 
+        const indicator = document.getElementById('save-indicator');
+        indicator.style.display = 'block';
+        setTimeout(() => indicator.style.display = 'none', 1500);
+    }
+
+    function update(i, f, v) { ingredients[i][f] = v; save(); calculate(); }
+
+    function render() {
+        const list = document.getElementById('ingredient-list');
+        list.innerHTML = '';
+        ingredients.forEach((ing, i) => {
+            const div = document.createElement('div');
+            div.className = 'ingredient-row';
+            div.innerHTML = `
+                <input type="text" value="${ing.name}" oninput="update(${i}, 'name', this.value)">
+                <input type="number" value="${ing.amount}" oninput="update(${i}, 'amount', parseFloat(this.value))">
+                <select onchange="update(${i}, 'unit', this.value)">
+                    <option value="cups" ${ing.unit==='cups'?'selected':''}>cups</option>
+                    <option value="tsp" ${ing.unit==='tsp'?'selected':''}>tsp</option>
+                    <option value="grams" ${ing.unit==='grams'?'selected':''}>grams</option>
+                </select>
+                <button onclick="removeRow(${i})" style="background:none; border:none; color:#ccc; cursor:pointer;">×</button>`;
+            list.appendChild(div);
+        });
+        calculate();
+    }
+
+    function calculate() {
+        const factor = document.getElementById('newYield').value / document.getElementById('origYield').value;
+        const resList = document.getElementById('results-list');
+        resList.innerHTML = '';
+        ingredients.forEach(ing => {
+            if (!ing.name) return;
+            let scaled = ing.amount * factor;
+            resList.innerHTML += `<div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #f9f9f9;">
+                <span><strong>${ing.name}</strong></span>
+                <span>${scaled.toFixed(2)} ${ing.unit}</span>
+            </div>`;
+        });
+    }
+    render();
+</script>
+</body>
+</html>
