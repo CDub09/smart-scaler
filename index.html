@@ -3,202 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ScaleLogic Hub | Professional Scaling</title>
+    <title>ScaleLogic Hub | Professional Scaling Master</title>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <style>
-        :root { --primary: #2e7d32; --accent: #1b5e20; --bg: #ffffff; --text: #1a1a1a; --border: #4a5568; }
+        :root { --primary: #2e7d32; --accent: #1b5e20; --bg: #f8fafc; --text: #1a202c; --border: #4a5568; --safe: #c05621; }
         
-        body { font-family: system-ui, -apple-system, sans-serif; background: #f7fafc; color: var(--text); margin: 0; padding-bottom: 80px; font-size: 20px; line-height: 1.6; }
+        /* 40+ VISION OPTIMIZATION: Large, High-Contrast Fonts */
+        body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding-bottom: 100px; font-size: 20px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
         
-        header { background: var(--primary); color: white; padding: 3rem 1rem; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        nav { background: var(--accent); padding: 18px; text-align: center; position: sticky; top: 0; z-index: 100; }
-        nav a { color: white; text-decoration: none; margin: 0 20px; font-weight: 800; font-size: 1.2rem; text-transform: uppercase; }
+        header { background: var(--primary); color: white; padding: 3rem 1rem; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        header h1 { margin: 0; font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; }
+        header p { margin: 10px 0 0; font-size: 1.2rem; font-weight: 600; opacity: 0.9; }
 
-        .container { max-width: 650px; margin: auto; padding: 20px; }
-        .card { background: white; border-radius: 24px; padding: 35px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); margin-bottom: 30px; border: 2px solid #e2e8f0; }
+        nav { background: var(--accent); padding: 18px; text-align: center; position: sticky; top: 0; z-index: 100; display: flex; justify-content: center; gap: 30px; }
+        nav a { color: white; text-decoration: none; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        nav a.active { border-bottom: 3px solid white; padding-bottom: 4px; }
+
+        .container { max-width: 680px; margin: auto; padding: 20px; }
         
-        /* Landmark Headers: Large Icons & Text */
-        h2 { font-size: 2rem; color: var(--primary); margin: 0 0 20px 0; display: flex; align-items: center; gap: 15px; font-weight: 900; }
+        /* EDUCATOR'S ONBOARDING: Intuitive Welcome */
+        .welcome-box { background: #e6fffa; border: 3px solid #38b2ac; border-radius: 24px; padding: 30px; margin-bottom: 35px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .welcome-box h2 { color: #234e52; margin-top: 0; font-size: 1.8rem; }
+        .welcome-box p { font-size: 1.1rem; color: #285e61; font-weight: 600; margin: 0; }
+
+        .card { background: white; border-radius: 28px; padding: 35px; box-shadow: 0 12px 30px rgba(0,0,0,0.06); margin-bottom: 30px; border: 2px solid #e2e8f0; position: relative; }
         
+        /* UNIVERSAL LANDMARKS: Icon + Text + Step */
+        .step-badge { background: #319795; color: white; padding: 6px 16px; border-radius: 50px; font-size: 0.85rem; font-weight: 900; display: inline-block; margin-bottom: 15px; }
+        h2 { font-size: 2.2rem; color: var(--primary); margin: 0 0 12px 0; display: flex; align-items: center; gap: 15px; font-weight: 900; }
+        .guide-text { font-size: 1rem; color: #4a5568; margin-bottom: 25px; font-weight: 600; border-left: 5px solid #cbd5e0; padding-left: 15px; line-height: 1.4; }
+
+        /* INTUITIVE INPUTS: Large Tap Targets */
         label { display: block; font-weight: 800; margin-bottom: 10px; color: #2d3748; font-size: 1.1rem; }
+        input, select, textarea { width: 100%; padding: 22px; border: 3px solid var(--border); border-radius: 18px; font-size: 1.3rem; margin-bottom: 15px; box-sizing: border-box; color: #000; font-weight: 600; background: #fff; appearance: none; }
+        input:focus { border-color: var(--primary); outline: 5px solid #c6f6d5; }
 
-        input, select, textarea { width: 100%; padding: 22px; border: 3px solid var(--border); border-radius: 18px; font-size: 1.3rem; margin-bottom: 15px; box-sizing: border-box; color: black; font-weight: 600; background: #fff; }
-        input:focus { border-color: var(--primary); outline: 4px solid #c6f6d5; }
-
-        /* Massive Hit Zones for All Users */
-        .btn { background: var(--primary); color: white; border: none; padding: 25px; border-radius: 18px; font-weight: 900; cursor: pointer; width: 100%; font-size: 1.4rem; transition: transform 0.1s; box-shadow: 0 6px 15px rgba(46, 125, 50, 0.2); }
+        .btn { background: var(--primary); color: white; border: none; padding: 25px; border-radius: 20px; font-weight: 900; cursor: pointer; width: 100%; font-size: 1.4rem; transition: transform 0.1s, background 0.2s; box-shadow: 0 8px 20px rgba(46, 125, 50, 0.25); }
         .btn:active { transform: scale(0.97); }
-        .btn-outline { background: #f8fafc; color: #2d3748; border: 3px solid #cbd5e0; margin-top: 10px; }
-        .btn-danger { background: #fff5f5; color: #c53030; border: 3px solid #feb2b2; padding: 18px; font-weight: 900; border-radius: 15px; font-size: 1.1rem; }
+        .btn-outline { background: #f8fafc; color: #2d3748; border: 3px solid #cbd5e0; margin-top: 15px; font-size: 1.1rem; }
+        .btn-danger { background: #fff5f5; color: #c53030; border: 3px solid #feb2b2; padding: 18px; font-weight: 900; border-radius: 15px; margin-top: 10px; }
 
-        .row { border: 3px solid #edf2f7; padding: 20px; border-radius: 20px; margin-bottom: 20px; background: #fcfcfc; }
-        
-        .res-box { background: #f0fff4; border: 3px solid #c6f6d5; padding: 25px; border-radius: 20px; margin-top: 20px; }
-        .res-line { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 2px solid #c6f6d5; font-weight: 800; font-size: 1.3rem; }
-        
-        .safe-tag { color: #c05621; background: #fffaf0; padding: 6px 12px; border-radius: 10px; font-size: 0.85rem; font-weight: 900; border: 1px solid #fbd38d; }
+        /* RESULTS AREA: Clean & Scan-Ready */
+        .row-item { border: 3px solid #edf2f7; padding: 25px; border-radius: 22px; margin-bottom: 20px; background: #fcfcfc; position: relative; }
+        .result-panel { background: #f0fff4; border: 3px solid #c6f6d5; padding: 30px; border-radius: 25px; margin-top: 30px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+        .list-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 2px solid #c6f6d5; font-weight: 800; font-size: 1.4rem; color: #1a202c; }
+        .safe-tag { color: var(--safe); background: #fffaf0; padding: 5px 12px; border-radius: 10px; font-size: 0.8rem; font-weight: 900; border: 1px solid #fbd38d; margin-left: 10px; text-transform: uppercase; }
 
-        #load-msg { display: none; text-align: center; font-weight: 900; color: var(--primary); padding: 30px; font-size: 1.5rem; }
-        
-        footer { text-align: center; padding: 40px 20px; color: #718096; font-size: 0.95rem; font-weight: 500; border-top: 1px solid #e2e8f0; margin-top: 50px; }
+        #ocr-status { display: none; text-align: center; font-weight: 900; color: var(--primary); padding: 30px; font-size: 1.5rem; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        footer { text-align: center; padding: 60px 20px; color: #718096; font-size: 1rem; line-height: 1.6; border-top: 2px solid #e2e8f0; margin-top: 50px; }
+        .utility-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+
+        @media (max-width: 500px) { h2 { font-size: 1.8rem; } body { font-size: 18px; } }
     </style>
 </head>
 <body>
 
 <header>
-    <h1 style="margin:0; font-size: 2.8rem; font-weight: 900;">ScaleLogic Hub</h1>
-    <p style="margin:10px 0 0; font-size: 1.2rem; font-weight: 600; opacity:0.9;">Professional Precision. Culinary Safety.</p>
+    <h1>ScaleLogic Hub</h1>
+    <p>Culinary Precision Tools for Professional Creators</p>
 </header>
 
 <nav>
-    <a href="#">🍳 RECIPES</a>
-    <a href="#" style="opacity:0.4;">🖼️ ART SIZER</a>
+    <a href="#" class="active">🍳 Recipes</a>
+    <a href="#" style="opacity:0.4;">🖼️ Art Sizer</a>
 </nav>
 
 <div class="container">
-    <div class="card">
-        <h2>📥 1. Import</h2>
-        <p style="font-weight: 700; color: #4a5568; margin-bottom: 15px;">Paste text or snap a clear photo of your recipe card.</p>
-        <textarea id="recipe-in" placeholder="Ex: 2 cups flour, 1 tsp salt..." rows="4"></textarea>
-        
-        <label for="camera" class="btn btn-outline" style="display:block; text-align:center; cursor:pointer;">📸 Upload / Photo Scan</label>
-        <input type="file" id="camera" accept="image/*" style="display:none;">
-        
-        <button onclick="startProcessing()" class="btn" style="margin-top:20px;">🚀 Process & Scale</button>
-        <div id="load-msg">✨ Digitizing Recipe... Please Wait.</div>
+    <div class="welcome-box">
+        <h2>👋 Welcome to your Dashboard</h2>
+        <p>This hub is designed to eliminate culinary math errors. Import any recipe, and we’ll automatically adjust the chemistry for high-volume batches (4x or more).</p>
     </div>
 
     <div class="card">
-        <h2>⚖️ 2. Set Scale</h2>
-        <label>Original Servings (Makes)</label>
-        <input type="number" id="s-orig" value="1" oninput="runScale()">
-        <label>Target Servings (Goal)</label>
-        <input type="number" id="s-new" value="1" oninput="oninput="runScale()">
+        <span class="step-badge">STEP 1</span>
+        <h2>📥 Import Recipe</h2>
+        <p class="guide-text">Paste your ingredients here OR snap a clear photo of your recipe card. We'll digitize and organize the list for you instantly.</p>
+        
+        <textarea id="recipe-input" placeholder="Example:&#10;2 cups flour&#10;1 tsp salt&#10;0.5 cup sugar" rows="4"></textarea>
+        
+        <label for="camera-btn" class="btn btn-outline" style="display:block; text-align:center; cursor:pointer;">
+            📸 Photo Scan / Upload Card
+        </label>
+        <input type="file" id="camera-btn" accept="image/*" style="display:none;">
+        
+        <button onclick="processRecipe()" class="btn" style="margin-top:20px;">🚀 Load & Organize Ingredients</button>
+        <div id="ocr-status">✨ Scanning your recipe... Please wait.</div>
     </div>
 
     <div class="card">
-        <h2>📋 3. Results</h2>
-        <div id="item-rows"></div>
-        <button onclick="addNewRow()" class="btn btn-outline">+ Add Item Manually</button>
+        <span class="step-badge">STEP 2</span>
+        <h2>⚖️ Set Your Scale</h2>
+        <p class="guide-text">Define the relationship between your original recipe and your goal. The chemistry updates as you type.</p>
+        
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+            <div>
+                <label>Original Makes (Batches)</label>
+                <input type="number" id="yield-orig" value="1" oninput="calculate()">
+            </div>
+            <div>
+                <label>Goal Yield (Batches)</label>
+                <input type="number" id="yield-goal" value="1" oninput="calculate()">
+            </div>
+        </div>
+    </div>
 
-        <div id="result-view" style="display:none; margin-top:40px;">
-            <div class="res-box">
-                <h3 style="margin:0 0 15px 0; color:var(--primary); font-size: 1.5rem;">🍳 Scaled Recipe</h3>
-                <div id="prep-list"></div>
+    <div class="card">
+        <span class="step-badge">STEP 3</span>
+        <h2>📋 Scaled Results</h2>
+        <p class="guide-text">Review your adjusted ingredients below. Items marked <strong>Scale-Safe</strong> are chemistry-optimized for bulk batches.</p>
+        
+        <div id="ingredient-rows"></div>
+        <button onclick="addManualRow()" class="btn btn-outline" style="margin-bottom:20px;">+ Add Custom Ingredient</button>
+
+        <div id="results-area" style="display:none; margin-top:40px; border-top: 5px solid #edf2f7; padding-top: 30px;">
+            <div class="result-panel">
+                <h3 style="margin:0 0 15px 0; color:var(--primary); font-size: 1.6rem;">🍳 Scaled Prep Guide</h3>
+                <div id="prep-output"></div>
             </div>
 
-            <div class="res-box" style="background:#ebf8ff; border-color:#bee3f8; color:#2a4365;">
-                <h3 style="margin:0 0 15px 0; font-size: 1.5rem;">🛒 Grocery Summary</h3>
-                <div id="shop-list"></div>
+            <div class="result-panel" style="background:#ebf8ff; border-color:#bee3f8; color:#2a4365;">
+                <h3 style="margin:0 0 15px 0; font-size: 1.6rem;">🛒 Grocery Shopping List</h3>
+                <div id="shop-output"></div>
             </div>
 
-            <button onclick="shareList()" class="btn" style="margin-top:30px;">📲 Save to My Notes</button>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <button onclick="window.print()" class="btn btn-outline">🖨️ Print PDF</button>
-                <button onclick="location.reload()" class="btn btn-outline" style="color:#e53e3e; border-color:#feb2b2;">🗑️ Clear All</button>
+            <button onclick="shareToNotes()" class="btn" style="margin-top:30px;">📲 Save to My Notes</button>
+            
+            <div class="utility-grid">
+                <button onclick="window.print()" class="btn btn-outline">🖨️ Print as PDF</button>
+                <button onclick="location.reload()" class="btn btn-outline" style="color:#c53030; border-color:#feb2b2;">🗑️ Clear Hub</button>
             </div>
         </div>
     </div>
 
     <footer>
-        <strong>SCALE-SAFE™ TECHNOLOGY</strong><br>
-        ScaleLogic Hub automatically adjusts leavening and salt for large batches (4x+) to ensure professional results.<br>
-        &copy; 2026 ScaleLogic Hub Tools
+        <strong>SCALE-SAFE™ TECHNOLOGY ACTIVATED</strong><br>
+        When scaling 4x or more, ScaleLogic Hub automatically reduces salt, baking soda, baking powder, and yeast by 15% to maintain professional taste profiles. &copy; 2026 ScaleLogic.
     </footer>
 </div>
 
 <script>
-    const camIn = document.getElementById('camera');
-    camIn.addEventListener('change', async (e) => {
+    // OCR SCANNING LOGIC
+    const photoInput = document.getElementById('camera-btn');
+    photoInput.addEventListener('change', async (e) => {
         if(!e.target.files[0]) return;
-        document.getElementById('load-msg').style.display='block';
-        const w = await Tesseract.createWorker('eng');
-        const { data: { text } } = await w.recognize(e.target.files[0]);
-        document.getElementById('recipe-in').value = text;
-        await w.terminate();
-        document.getElementById('load-msg').style.display='none';
-        startProcessing();
+        document.getElementById('ocr-status').style.display = 'block';
+        const worker = await Tesseract.createWorker('eng');
+        const { data: { text } } = await worker.recognize(e.target.files[0]);
+        document.getElementById('recipe-input').value = text;
+        await worker.terminate();
+        document.getElementById('ocr-status').style.display = 'none';
+        processRecipe();
     });
 
-    function startProcessing() {
-        const raw = document.getElementById('recipe-in').value.split('\n');
-        document.getElementById('item-rows').innerHTML = '';
-        raw.forEach(l => {
-            const m = l.match(/(\d+\.?\d*)\s*(cup|tsp|tbsp|g|oz|lb|ml|l|unit)?\s+(.*)/i);
-            if(m) addNewRow(m[3].trim(), m[1], (m[2] || 'unit').toLowerCase());
+    function processRecipe() {
+        const rawText = document.getElementById('recipe-input').value.split('\n');
+        document.getElementById('ingredient-rows').innerHTML = '';
+        rawText.forEach(line => {
+            const match = line.match(/(\d+\.?\d*)\s*(cup|tsp|tbsp|g|oz|lb|ml|l|unit)?\s+(.*)/i);
+            if(match) addManualRow(match[3].trim(), match[1], (match[2] || 'unit').toLowerCase());
         });
-        runScale();
+        calculate();
     }
 
-    function addNewRow(n='', q='', u='cup') {
-        const d = document.createElement('div');
-        d.className = 'row';
-        d.innerHTML = `
-            <label>Ingredient</label><input type="text" class="i-n" value="${n}" oninput="runScale()">
-            <label>Quantity</label><input type="number" class="i-q" value="${q}" oninput="runScale()">
-            <label>Unit</label>
-            <select class="i-u" onchange="runScale()">
-                <option value="cup" ${u==='cup'?'selected':''}>Cup</option>
-                <option value="tsp" ${u==='tsp'?'selected':''}>Tsp</option>
-                <option value="tbsp" ${u==='tbsp'?'selected':''}>Tbsp</option>
-                <option value="g" ${u==='g'?'selected':''}>Grams (g)</option>
-                <option value="oz" ${u==='oz'?'selected':''}>Ounces (oz)</option>
-                <option value="unit" ${u==='unit'?'selected':''}>Unit/Count</option>
-            </select>
-            <button class="btn-danger" onclick="this.parentElement.remove(); runScale()">✕ Remove Ingredient</button>
+    function addManualRow(name='', qty='', unit='cup') {
+        const container = document.getElementById('ingredient-rows');
+        const div = document.createElement('div');
+        div.className = 'row-item';
+        div.innerHTML = `
+            <label>Ingredient Name</label>
+            <input type="text" class="item-name" value="${name}" oninput="calculate()" placeholder="e.g. Flour">
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                <div><label>Qty</label><input type="number" class="item-qty" value="${qty}" oninput="calculate()"></div>
+                <div>
+                    <label>Unit</label>
+                    <select class="item-unit" onchange="calculate()">
+                        <option value="cup" ${unit==='cup'?'selected':''}>Cup</option>
+                        <option value="tsp" ${unit==='tsp'?'selected':''}>Tsp</option>
+                        <option value="tbsp" ${unit==='tbsp'?'selected':''}>Tbsp</option>
+                        <option value="g" ${unit==='g'?'selected':''}>Grams (g)</option>
+                        <option value="oz" ${unit==='oz'?'selected':''}>Ounces (oz)</option>
+                        <option value="unit" ${unit==='unit'?'selected':''}>Unit/Count</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn-danger" onclick="this.parentElement.remove(); calculate()">✕ Remove Item</button>
         `;
-        document.getElementById('item-rows').appendChild(d);
+        container.appendChild(div);
     }
 
-    function fmtFrac(v) {
-        if (v % 1 === 0) return v;
-        const w = Math.floor(v); const f = v - w;
-        if (f <= 0.2) return (w > 0 ? w : '') + " 1/4";
-        if (f <= 0.4) return (w > 0 ? w : '') + " 1/3";
-        if (f <= 0.6) return (w > 0 ? w : '') + " 1/2";
-        if (f <= 0.8) return (w > 0 ? w : '') + " 3/4";
-        return Math.ceil(v);
+    // CULINARY MATH ENGINE
+    function toFractions(val) {
+        if (val % 1 === 0) return val;
+        const whole = Math.floor(val); const frac = val - whole;
+        if (frac <= 0.2) return (whole > 0 ? whole : '') + " 1/4";
+        if (frac <= 0.4) return (whole > 0 ? whole : '') + " 1/3";
+        if (frac <= 0.6) return (whole > 0 ? whole : '') + " 1/2";
+        if (frac <= 0.8) return (whole > 0 ? whole : '') + " 3/4";
+        return Math.ceil(val);
     }
 
-    function runScale() {
-        const factor = (document.getElementById('s-new').value || 1) / (document.getElementById('s-orig').value || 1);
-        const rows = document.querySelectorAll('.row');
-        if(rows.length > 0) document.getElementById('result-view').style.display='block';
+    function calculate() {
+        const factor = (document.getElementById('yield-goal').value || 1) / (document.getElementById('yield-orig').value || 1);
+        const rows = document.querySelectorAll('.row-item');
+        if(rows.length > 0) document.getElementById('results-area').style.display = 'block';
         
-        const p_out = document.getElementById('prep-list');
-        const s_out = document.getElementById('shop-list');
-        p_out.innerHTML = ''; s_out.innerHTML = '';
-        let shop = {};
+        const prepOut = document.getElementById('prep-output');
+        const shopOut = document.getElementById('shop-output');
+        prepOut.innerHTML = ''; shopOut.innerHTML = '';
+        let shoppingList = {};
 
-        rows.forEach(r => {
-            const n = r.querySelector('.i-n').value;
-            const q = parseFloat(r.querySelector('.i-q').value) || 0;
-            const u = r.querySelector('.i-u').value;
+        rows.forEach(row => {
+            const n = row.querySelector('.item-name').value;
+            const q = parseFloat(row.querySelector('.item-qty').value) || 0;
+            const u = row.querySelector('.item-unit').value;
             if(!n) return;
 
-            let s = q * factor;
-            const isSafeItem = /salt|soda|powder|yeast/i.test(n) && factor >= 4;
-            if(isSafeItem) s *= 0.85;
+            let scaled = q * factor;
+            // SCALE-SAFE LOGIC (Educator-Approved Chemistry)
+            const isReactive = /salt|soda|powder|yeast/i.test(n) && factor >= 4;
+            if(isReactive) scaled *= 0.85;
 
-            p_out.innerHTML += `<div class="res-line"><span>${n} ${isSafeItem ? '<span class="safe-tag">SAFE-SCALE™</span>' : ''}</span> <span>${fmtFrac(s)} ${u}</span></div>`;
+            prepOut.innerHTML += `<div class="list-row"><span>${n} ${isReactive ? '<span class="safe-tag">Scale-Safe™</span>' : ''}</span> <span>${toFractions(scaled)} ${u}</span></div>`;
             
-            let cq = s; let cu = u;
-            if(cu==='tsp' && cq>=3) { cq/=3; cu='tbsp'; }
-            if(cu==='tbsp' && cq>=16) { cq/=16; cu='cups'; }
-            if(!shop[n]) shop[n] = { q: 0, u: cu };
-            shop[n].q += cq;
+            // AUTOMATIC UNIT CONVERSION FOR SHOPPING
+            let shopQ = scaled; let shopU = u;
+            if(shopU==='tsp' && shopQ>=3) { shopQ/=3; shopU='tbsp'; }
+            if(shopU==='tbsp' && shopQ>=16) { shopQ/=16; shopU='cups'; }
+            
+            if(!shoppingList[n]) shoppingList[n] = { q: 0, u: shopU };
+            shoppingList[n].q += shopQ;
         });
 
-        for(let k in shop) {
-            s_out.innerHTML += `<div class="res-line"><span>${k}</span> <span>${shop[k].q.toFixed(2)} ${shop[k].u}</span></div>`;
+        for(let item in shoppingList) {
+            shopOut.innerHTML += `<div class="list-row"><span>${item}</span> <span>${shoppingList[item].q.toFixed(2)} ${shoppingList[item].u}</span></div>`;
         }
     }
 
-    async function shareList() {
-        let txt = "ScaleLogic Shopping List\n\n";
-        document.querySelectorAll('#shop-list .res-line').forEach(l => txt += "• " + l.innerText + "\n");
-        if(navigator.share) await navigator.share({ title: 'ScaleLogic Hub', text: txt });
-        else { navigator.clipboard.writeText(txt); alert("Copied! Paste into your Notes app."); }
+    async function shareToNotes() {
+        let text = "ScaleLogic Hub Shopping List\n\n";
+        document.querySelectorAll('#shop-output .list-row').forEach(row => text += "• " + row.innerText + "\n");
+        if(navigator.share) await navigator.share({ title: 'ScaleLogic Hub List', text: text });
+        else { navigator.clipboard.writeText(text); alert("List Copied! Paste into your Notes app."); }
     }
 </script>
 </body>
